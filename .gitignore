@@ -3,3 +3,7 @@ venv/*
 *__pycache__*
 .gitattributes
 token/*
+*.code-workspace
+*.DS_Store
+Thumbs.db
+/.vscode/
