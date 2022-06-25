@@ -4,7 +4,6 @@ from vk_api.longpoll import VkLongPoll, VkEventType
 from sql_class import SqlClass
 from utils import get_token
 
-
 def write_msg(user_id, message):
     vk.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': random.randint(0, 2048)})
 
@@ -27,16 +26,13 @@ print(f"База данных {sql.get_test(id=1)}")
 
 # Основной цикл
 for event in longpoll.listen():
-
     # Если пришло новое сообщение
     if event.type == VkEventType.MESSAGE_NEW:
-
         # Если оно имеет метку для меня( то есть бота)
         if event.to_me:
-
             # Сообщение от пользователя
             request = event.text
-
+            print(request)
             # Каменная логика ответа
             if request == "привет":
                 write_msg(event.user_id, "Хай")
