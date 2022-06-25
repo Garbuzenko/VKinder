@@ -7,17 +7,12 @@ from utils import get_token
 def write_msg(user_id, message):
     vk.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': random.randint(0, 2048)})
 
-# API-ключ созданный ранее
-token = get_token('VKinder')
-
 # Авторизуемся как сообщество
-vk = vk_api.VkApi(token=token)
+vk = vk_api.VkApi(token=get_token('VKinder'))
 
 # Работа с сообщениями
 longpoll = VkLongPoll(vk)
 
-# Commander
-# commander = Commander()
 print(f"Бот запущен")
 
 #Тест базы данных
@@ -39,7 +34,6 @@ for event in longpoll.listen():
             elif request == "пока":
                 write_msg(event.user_id, "Пока((")
             elif request.split()[0] == "command":
-                write_msg(event.user_id, "Пока((")
-                # write_msg(event.user_id, commander.do(request[8::]))
+                write_msg(event.user_id, "Команды")
             else:
                 write_msg(event.user_id, "Не поняла вашего ответа...")
