@@ -1,14 +1,14 @@
 import random
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
-from sql_class import SqlClass
-from utils import get_token
+from modules.db.sql_class import SqlClass
+from modules.utils import utils
 
 def write_msg(user_id, message):
     vk.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': random.randint(0, 2048)})
 
 # Авторизуемся как сообщество
-vk = vk_api.VkApi(token=get_token('VKinder'))
+vk = vk_api.VkApi(token=utils.get_token('VKinder'))
 
 # Работа с сообщениями
 longpoll = VkLongPoll(vk)
