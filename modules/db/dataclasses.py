@@ -1,6 +1,6 @@
 ###########################
-# файл: dataclass.py
-# version: 0.1.1
+# файл: dataclasses.py
+# version: 0.1.2
 ###########################
 
 # Пол пользователя ВКонтакте
@@ -28,21 +28,24 @@ class VKUserData(object):
     vkdomain: str
     # Дата время последнего общения с ботом
     last_visit: str
+    # дополнительные свойства пользователя ВКонтакте
+    settings : list
 
     #инициализация класса
     def __init__(self):
         super().__init__()
 
         # инициализация данных "по умолчанию"
-        self.vk_id = 0
+        self.vk_id = -1
         self.first_name = ''
         self.last_name = ''
         self.bdate = ''
-        self.gender = 0
-        self.city_id = 0
+        self.gender = VK_UNKNOWN_GENDER
+        self.city_id = -1
         self.city_title = ''
         self.vkdomain = ''
         self.last_visit = ''
+        self.settings = {'access_token' : '', 'srch_offset' : -1, 'age_from' : -1, 'age_to' : -1, 'last_command' : ''}
     # end __init__()
 
     # вывод данных о пользователе в формате json

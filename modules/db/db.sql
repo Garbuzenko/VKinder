@@ -29,6 +29,12 @@ CREATE TABLE IF NOT EXISTS black_list (
 CREATE TABLE IF NOT EXISTS last_search (
 	vk_id INTEGER NOT NULL,
 	lst_id INTEGER NOT NULL,
+    srch_number INTEGER,
 	CONSTRAINT last_search_pk PRIMARY KEY (vk_id, lst_id)
 );
 
+CREATE TABLE IF NOT EXISTS settings (
+	vk_id INTEGER NOT NULL UNIQUE,
+	access_token VARCHAR (100),
+	srch_offset INTEGER
+);
