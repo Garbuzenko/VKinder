@@ -1,3 +1,5 @@
+from pprint import pprint
+
 import requests
 
 
@@ -6,7 +8,7 @@ class ClassVK(object):
 
     def __init__(self, access_token=None):
         self.access_token = access_token
-        self.offset = 0
+        self.offset = 0 #Сдвиг для поиска
     @staticmethod
     def sex_invert(sex):
         if sex == 1:
@@ -18,61 +20,74 @@ class ClassVK(object):
         return sex
     def move_offset(self, i):
         self.offset += i
-    def get_attachments(self, user_id):
-        params = self.get_info(user_id)  # Параметры пользователя
-        search_list = self.users_search(params)
-        for l in search_list:
-            attachments = []
-            photos = self.photos_get(l, 3)
+    def set_offset(self, i):
+        self.offset = i
+
+    def search(self, user_id, offset, count):
+        params = self.get_info(user_id)
+        search_list = self.users_search(params, count=count, offset=offset)
+        pprint(search_list)
+        return search_list
+    def get_user_data(self, id, offset):
+        attachments = []
+        content = ''
+        if id != 0:
+            params = self.get_info(id)
+
+            content = f'\n{params.get("first_name")} {params.get("last_name")}'
+            self.get_info(id)  # Параметры пользователя
+
+            photos = self.photos_get(id, 3)
             if photos.get('response') is not None:
                 items = photos['response']['items']
                 for item in items:
-                    attachments.append(f'photo{l}_{item.get("id")}')
-        return attachments
-    def users_search(self, params, count=1):
-        [_city, _bdate, _sex] = params
+                        attachments.append(f'photo{id}_{item.get("id")}')
+        return [','.join(attachments), content]
+    def users_search(self, params, count=1, offset=0):
+        # [_city, _bdate, _sex] = params
 
         method = 'users.search'
         url = self.API_URL + method
         params = {
             'count': count,
-            'city': _city,
-            'offset': self.offset,
+            'city': params.get("city").get("id"),
+            'offset': offset,
             # 'bdate': _bdate,
-            'sex': self.sex_invert(_sex),
+            'sex': self.sex_invert(params.get("sex")),
             'access_token': self.access_token,
             'v': '5.131'
         }
-        print(method ,params)
+
+        # print(method ,params)
         res = requests.get(url, params=params)
         response = res.json().get("response")
-        print(response)
+        # print(response)
         # Надо получить
         ids = []
         for r in response.get('items'):
-            print(r)
+            # print(r)
             ids.append(r.get("id"))
         return ids
 
     def get_info(self, user_ids):
         method = 'users.get'
         url = self.API_URL + method
-        print(self.access_token)
         params = {
             'user_ids': user_ids,
             'access_token': self.access_token,
-            'fields': 'city, bdate, sex',
+            'fields': 'screen_name, city, bdate, sex',
             'v': '5.131'
         }
         res = requests.get(url, params=params)
         response = res.json().get("response")
         for r in response:
-            print(r)
-            _city = r.get("city").get("id")
-            _bdate = r.get("bdate")
-            _sex = r.get("sex")
+            res = r
+            # print(r)
+            # _city = r.get("city").get("id")
+            # _bdate = r.get("bdate")
+            # _sex = r.get("sex")
             break
-        return [_city, _bdate, _sex]
+        return res#[_city, _bdate, _sex]
 
     def get_id(self, user_ids):
         method = 'users.get'

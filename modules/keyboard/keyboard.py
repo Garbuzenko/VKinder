@@ -6,7 +6,20 @@ class ClassKeyboard:
 
     @staticmethod
     def settings():
+
         keyboard = VkKeyboard(**settings)
+        keyboard.add_callback_button(label='Получить токен', color=VkKeyboardColor.PRIMARY,
+                                     payload={"type": "open_link",
+                                              "link": "https://oauth.vk.com/authorize?client_id=8116853&scope=wall,offline&redirect_uri=https://cosmio.io/api/vkinder/api.php&display=page&v=5.24&response_type=token"})
+        keyboard.add_line()
+
+        keyboard.add_callback_button(label='Возраст от', color=VkKeyboardColor.SECONDARY,
+                                     payload={"type": "age_from", "text": "Возраст от"})
+
+        keyboard.add_callback_button(label='Возраст до', color=VkKeyboardColor.SECONDARY,
+                                     payload={"type": "age_to", "text": "Возраст до"})
+
+        keyboard.add_line()
         keyboard.add_callback_button('Назад', color=VkKeyboardColor.NEGATIVE, payload={"type": "menu"})
         return keyboard
 
@@ -20,10 +33,10 @@ class ClassKeyboard:
         keyboard.add_callback_button(label='Следующий', color=VkKeyboardColor.PRIMARY,
                                      payload={"type": "next", "text": "Ищем"})
         keyboard.add_line()
-        keyboard.add_callback_button(label='Избранное', color=VkKeyboardColor.POSITIVE,
+        keyboard.add_callback_button(label='В избранное', color=VkKeyboardColor.POSITIVE,
                                      payload={"type": "show_snackbar", "text": "Добавлен в избранное"})
 
-        keyboard.add_callback_button(label='Чёрный список', color=VkKeyboardColor.SECONDARY,
+        keyboard.add_callback_button(label='В чёрный список', color=VkKeyboardColor.SECONDARY,
                                      payload={"type": "show_snackbar", "text": "Добавлен в черный список"})
         keyboard.add_line()
         keyboard.add_callback_button(label='Меню', color=VkKeyboardColor.NEGATIVE,
@@ -42,12 +55,19 @@ class ClassKeyboard:
         keyboard = VkKeyboard(**settings)
         keyboard.add_callback_button(label='Поиск', color=VkKeyboardColor.POSITIVE,
                                      payload={"type": "search", "text": "Ищем"})
+
         keyboard.add_line()
+        keyboard.add_callback_button(label='Избранное', color=VkKeyboardColor.PRIMARY,
+                                     payload={"type": "favorites", "text": "Фавориты"})
+
+        keyboard.add_callback_button(label='Чёрный список', color=VkKeyboardColor.SECONDARY,
+                                     payload={"type": "black_list", "text": "Черный список"})
+
+        keyboard.add_line()
+
         keyboard.add_callback_button(label='Настройки', color=VkKeyboardColor.SECONDARY,
                                      payload={"type": "settings", "text": "Настройки"})
 
-        keyboard.add_callback_button(label='Получить токен', color=VkKeyboardColor.PRIMARY,
-                                     payload={"type": "open_link", "link": "https://oauth.vk.com/authorize?client_id=8116853&scope=wall,offline&redirect_uri=https://cosmio.io&display=page&v=5.24&response_type=token"})
         # keyboard.add_line()
 
         return keyboard

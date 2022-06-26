@@ -15,16 +15,14 @@ from modules.API.ClassVK import ClassVK
 from modules.data.data import settings
 from modules.data.data import comands
 
-
-
 def get_token(name):
-    with open('C:/hack/python/netology/VKinder/mikhail/token/tokens.json') as f:
+    with open('D:/token/tokens.json') as f:
         token_json = json.load(f)
     return token_json[name]
 
 def get_answer(el):
-    return random.choice(el['out'])
-
+    answer = f'{random.choice(el["out"])} {el.get("content")}'
+    return answer
 
 def get_comand(request):
     c = 'none'
