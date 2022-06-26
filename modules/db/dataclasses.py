@@ -4,7 +4,7 @@ VK_FEMALE = 1
 VK_UNKNOWN_GENDER = 0
 
 # Класс определяющий набор данных пользователя ВКонтакте
-class VKUserData(object):
+class VKUserData(object): 
     # id пользователя ВКонтакте
     vk_id : int
     # Имя пользователя ВКонтакте
@@ -28,15 +28,15 @@ class VKUserData(object):
     def __init__(self):
         super().__init__()
 
-    vk_id = 0
-    first_name = ''
-    last_name = ''
-    bdate = ''
-    gender = ''
-    city_id = 0
-    city_title = ''
-    domain = ''
-    last_visit = ''
+        self.vk_id = 0
+        self.first_name = ''
+        self.last_name = ''
+        self.bdate = ''
+        self.gender = ''
+        self.city_id = 0
+        self.city_title = ''
+        self.domain = ''
+        self.last_visit = ''
     # end __init__()
 
     # вывод данных о пользователе в формате json
