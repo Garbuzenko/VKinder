@@ -19,7 +19,7 @@ class VKUserData(object):
     # День рождения пользователя
     bdate: str
     # Пол пользоветеля
-    gender : str
+    gender : int
     # id города пользователя
     city_id: int
     # Название города пользователя
@@ -33,11 +33,12 @@ class VKUserData(object):
     def __init__(self):
         super().__init__()
 
+        # инициализация данных "по умолчанию"
         self.vk_id = 0
         self.first_name = ''
         self.last_name = ''
         self.bdate = ''
-        self.gender = ''
+        self.gender = 0
         self.city_id = 0
         self.city_title = ''
         self.domain = ''
