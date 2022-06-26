@@ -1,4 +1,5 @@
 import json
+
 import random
 from pprint import pprint
 
@@ -14,7 +15,6 @@ from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 from modules.API.ClassVK import ClassVK
 from modules.data.data import settings
 from modules.data.data import comands
-
 
 
 def get_token(name):
@@ -34,3 +34,4 @@ def get_comand(request):
             break
     comand = comands[c]
     return comand
+

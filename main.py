@@ -5,15 +5,11 @@ from vk_api import VkApi
 from vk_api.utils import get_random_id
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
-# from modules.api.ClassVk import ClassVk
-
 from modules.API.ClassVK import ClassVK
 from modules.data.data import settings, API_VERSION, GROUP_ID, CALLBACK_TYPES
 from modules.keyboard.keyboard import ClassKeyboard
 from modules.utils import utils
 from modules.utils.utils import get_token
-
-
 def run_comand(comand, user_id):
     key = comand.get('key')
     if key != 'none':
@@ -30,7 +26,8 @@ def run_comand(comand, user_id):
             comand['attachment'] = ','.join(myApi.get_attachments(user_id=user_id))
             pass
     return comand
-
+# Авторизуемся как сообщество
+vk = vk_api.VkApi(token=utils.get_token('VKinder'))
 
 #Инициализация
 offset = 0
