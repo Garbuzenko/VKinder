@@ -1,4 +1,7 @@
-# 
+# Пол пользователя ВКонтакте
+VK_MALE = 2
+VK_FEMALE = 1
+VK_UNKNOWN_GENDER = 0
 
 # Класс определяющий набор данных пользователя ВКонтакте
 class VKUserData(object):
@@ -8,12 +11,12 @@ class VKUserData(object):
     first_name : str
     # Фамилия пользователя
     last_name: str
-    # Дент рождения
+    # День рождения пользователя
     bdate: str
     # Пол пользоветеля
     gender : str
     # id города пользователя
-    city_id: str
+    city_id: int
     # Название города пользователя
     city_title: str
     # адрес траницы ВКонтакте пользователя
@@ -30,7 +33,7 @@ class VKUserData(object):
     last_name = ''
     bdate = ''
     gender = ''
-    city_id = ''
+    city_id = 0
     city_title = ''
     domain = ''
     last_visit = ''
