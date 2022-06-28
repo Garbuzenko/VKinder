@@ -1,6 +1,6 @@
 ###########################
 # файл: databases.py
-# version: 0.1.9
+# version: 0.1.10
 ###########################
 
 import sqlalchemy
@@ -189,7 +189,8 @@ class DataBase(object):
     def set_setings(self, vk_user: VKUserData) -> bool:
         sql = f"""
         INSERT INTO settings(vk_id, access_token, srch_offset, age_from, age_to, last_command) 
-        VALUES ('{vk_user.vk_id}','{vk_user.access_token}','{vk_user.srch_offset}','{vk_user.age_from}','{vk_user.age_to}','{vk_user.last_command}');
+        VALUES ('{vk_user.vk_id}','{vk_user.settings.get('access_token')}','{vk_user.settings.get('srch_offset')}','
+        {vk_user.settings.get('age_from')}','{vk_user.settings.get('age_to')}','{vk_user.settings.get('last_command')}');
                """
         result = self.connection.execute(sql)
         return True

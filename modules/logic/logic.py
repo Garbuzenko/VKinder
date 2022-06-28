@@ -1,6 +1,6 @@
 ###########################
 # файл: logic.py
-# version: 0.1.9
+# version: 0.1.10
 ###########################
 
 from pprint import pprint
@@ -78,7 +78,8 @@ class Logic(object):
 
     def get_settings(self, user_id: int):
         vkUser = VKUserData(self.api.get_info(user_id))
-        self.position = self.db.get_setings_smart(vkUser).settings['srch_offset']
+        self.get_setings_smart(vkUser)
+        self.position = vkUser.settings['srch_offset']
 
     def set_settings(self, user_id: int):
         self.db.set_setings(user_id=user_id,srch_offset=self.position)
