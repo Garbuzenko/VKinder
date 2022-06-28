@@ -111,7 +111,7 @@ class DataBase(object):
         if result is None or len(result) == 0:
             return list()
         # возвращаем список fav_id
-        return list(result)
+        return list(zip(*list(result)))[0]
     # end get_favorites()
 
     # удалить избранный контакт у пользовалетя из базы данных
@@ -132,7 +132,7 @@ class DataBase(object):
         if result is None or len(result) == 0:
             return list()
         # разбиваем список из пары vk_id, fav_id и получаем list(fav_id)
-        return list(result)
+        return list(zip(*list(result)))[0]
     # end get_black_list()
 
     # # сохранить заблокированный контакт
