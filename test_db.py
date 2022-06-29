@@ -1,6 +1,6 @@
 ###########################
 # файл: test.py
-# version: 0.1.9
+# version: 0.1.8
 ###########################
 
 #
@@ -14,8 +14,8 @@ import modules.db.dataclasses as datacls
 import modules.db.databases as dbs
 
 # инициализация БД
-vk_db = DataBase(dbs.POSTGRES_DB)
-#vk_db = DataBase(utils.get_token('db_connection'))
+#vk_db = DataBase(dbs.POSTGRES_DB)
+vk_db = DataBase(utils.get_token('db_connection'))
 
 # инициализация подсистемы "Бизнес логики"
 vk_logic = Logic(vk_db, None)
@@ -59,5 +59,5 @@ print(vk_db.get_favorites(vk_user.vk_id))
 for lst in srch_list2:
     print(vk_db.new_black_id(vk_user.vk_id, lst))
     
-# тест чтения блэк-листа
+# тест чтения избранного
 print(vk_db.get_black_list(vk_user.vk_id))
