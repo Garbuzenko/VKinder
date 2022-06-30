@@ -38,6 +38,7 @@ class DataBase(object):
 
     # get_vkuser()
 
+
     # функция проверки, есть ли пользователь в базе данных
     def id_in_database(self, vk_id: int) -> bool:
         
@@ -257,11 +258,11 @@ class DataBase(object):
     def upd_setings(self, vk_user: VKUserData) -> bool:
 
         sql = f"""
-        UPDATE settings SET srch_offset = '{vk_user.settings['srch_offset']}', access_token = '{vk_user.settings['access_token']}',
-        age_from = '{vk_user.settings['age_from']}',age_to = '{vk_user.settings['age_to']}', last_command = '{vk_user.settings['last_command']}' 
+        UPDATE settings SET srch_offset = '{vk_user.settings.srch_offset}', access_token = '{vk_user.settings.access_token}',
+        age_from = '{vk_user.settings.age_from}',age_to = '{vk_user.settings.age_to}', last_command = '{vk_user.settings.last_command}' 
         WHERE vk_id={vk_user.vk_id};
                """
-        result = self.connection.execute(sql)
+        self.connection.execute(sql)
         return True
 
 
