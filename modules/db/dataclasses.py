@@ -2,6 +2,7 @@
 # файл: dataclasses.py
 # version: 0.1.15
 ###########################
+# from dataclasses import dataclass
 from dataclasses import dataclass
 from datetime import datetime
 
@@ -178,4 +179,3 @@ class VKUserData(object):
         self.settings = vk_user.settings
     # end copy()
 
-# end class VKUserData

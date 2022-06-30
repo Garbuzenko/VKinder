@@ -135,6 +135,7 @@ class ClassVK(object):
     # функция для запроса данных от vk.API с контролем ошибки 'Too many requests per second'
     @staticmethod
     def get_vk_data(url, params) -> response:
+        resp = ''
         repeat = True
         while repeat:
             resp = requests.get(url, params=params)

@@ -250,7 +250,7 @@ class DataBase(object):
         VALUES ('{vk_user.vk_id}','{vk_user.settings.get('access_token')}','{vk_user.settings.get('srch_offset')}','
         {vk_user.settings.get('age_from')}','{vk_user.settings.get('age_to')}','{vk_user.settings.get('last_command')}');
                """
-        result = self.connection.execute(sql)
+        self.connection.execute(sql)
         return True
     # end set_settins()
 
