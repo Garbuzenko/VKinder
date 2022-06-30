@@ -74,6 +74,7 @@ class ClassVK(object):
         return ids
 
     def check_token(self, user_id, access_token):
+        #Проверим токен на валидность и принадлежность пользователю
         method = 'users.get'
         print(method, )
         url = self.API_URL + method
