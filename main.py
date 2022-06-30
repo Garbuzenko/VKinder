@@ -28,7 +28,7 @@ def main():
         user_id = logic.get_user_id(event)
         if user_id:
             logic.new_vk_user(user_id) #Инициализируем пользователя
-            comand = logic.run_comand(comand=utils.get_comand(logic.get_command_text(event)))
+            comand = logic.run_comand(comand=logic.get_comand(event))
             if event.type == VkBotEventType.MESSAGE_NEW:
                 # Если пришло новое сообщение
                 if event.obj.message['text'] != '':

@@ -73,6 +73,27 @@ class ClassVK(object):
                 ids.append(r.get("id"))
         return ids
 
+    def check_token(self, user_id, access_token):
+        method = 'users.get'
+        print(method, )
+        url = self.API_URL + method
+        params = {
+            'user_ids': user_id,
+            'access_token': access_token,
+            'v': API_VERSION
+        }
+
+        res = self.get_vk_data(url, params)
+        response = res.json().get("response")
+
+        for r in response:
+            if r.get('id'):
+                if r.get('id') == user_id:
+                    #Токен корректный
+                    return True
+
+        # Токен не корректный
+        return False
     def get_info(self, user_ids):
         method = 'users.get'
         print(method, user_ids)

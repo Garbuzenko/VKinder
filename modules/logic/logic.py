@@ -2,7 +2,7 @@
 # файл: logic.py
 # version: 0.1.15
 ###########################
-
+from modules.data.data import comands
 from modules.db.databases import DataBase
 from vk_api.bot_longpoll import VkBotEventType
 from modules.db.dataclasses import VK_ID_NOTDEFINED, VKUserData
@@ -14,6 +14,7 @@ class Logic(object):
         self.db = db
         self.api = api
         self.vkUser = None
+        self.request = ''
 
     # функция обновления информации о пользователе начавшем диалог с ВКБотом
     # функция вызывается ВКБотом при начале диалога пользователя
@@ -70,7 +71,14 @@ class Logic(object):
                 content = self.get_list(content, self.db.get_black_list(self.vkUser.vk_id))
             elif key == 'favorites':
                 content = self.get_list(content, self.db.get_black_list(self.vkUser.vk_id))
+            elif key == 'save_token':
+                if self.api.check_token(self.vkUser.vk_id, self.request):
+                    self.vkUser.settings.access_token = self.request
+                    content = "Токен сохранен"
+                else:
+                    content = f"Токен не правильный: {self.request}"
         comand['content'] = content
+        self.vkUser.settings.last_command = key
         return comand
 
     def update_search_list(self):
@@ -173,4 +181,19 @@ class Logic(object):
 
     def add_favorite_list(self, user_id):
         self.db.new_favorite(user_id, self.get_user(user_id))
+
+    def get_comand(self, event):
+        self.request = self.get_command_text(event)
+        if event.type == VkBotEventType.MESSAGE_NEW:
+            if self.vkUser.settings.last_command == 'set_token':
+                return comands['save_token']
+
+        self.request = self.request.lower()
+        c = 'none'
+        for c in comands:
+            el = comands[c]
+            if self.request in el.get('in') or self.request == c:
+                break
+        comand = comands[c]
+        return comand
 
