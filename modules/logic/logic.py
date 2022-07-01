@@ -1,6 +1,6 @@
 ###########################
 # файл: logic.py
-# version: 0.1.15
+# version: 0.1.16
 ###########################
 from modules.data.data import comands
 from modules.db.databases import DataBase
@@ -20,8 +20,10 @@ class Logic(object):
     # функция вызывается ВКБотом при начале диалога пользователя
     # возвращае True, если данные сохранены, иначе False
     def new_vk_user(self, user_id)-> bool:# vk_user: VKUserData) -> bool:
+        
         if user_id is None:
             return False
+        
         if not self.vkUser is None and self.vkUser.vk_id == user_id:
             #Пишет тот же пользователь, vkUser не меняется
             return True
@@ -31,11 +33,11 @@ class Logic(object):
         else:
             # Создадим пользователя
             self.vkUser = VKUserData(self.api.get_info(user_id))
-            # создаем или обновляем (если существует) данные о пользователе
-            if not self.db.new_vkuser(self.vkUser):
-                return False
-
-        #Проверим свойства в БД и сохраним, если их нет там
+            
+        # создаем или обновляем (если существует) данные о пользователе
+        if not self.db.new_vkuser(self.vkUser):
+            return False
+        # Проверим свойства в БД и сохраним, если их нет там
         self.get_settings()
         return True
     # end new_vk_user

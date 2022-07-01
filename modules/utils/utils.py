@@ -1,9 +1,15 @@
+###########################
+# файл: utils.py
+# version: 0.1.16
+###########################
+
 import json
 import random
 from modules.data.data import comands
 
 def get_token(name):
-    with open('D:/token/tokens.json') as f:
+    #with open('D:/token/tokens.json') as f:
+    with open('./token/tokens.json') as f:
         token_json = json.load(f)
     return token_json[name]
 
