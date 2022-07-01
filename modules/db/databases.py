@@ -1,6 +1,6 @@
 ###########################
 # файл: databases.py
-# version: 0.1.15
+# version: 0.1.16
 ###########################
 
 import sqlalchemy
@@ -56,26 +56,39 @@ class DataBase(object):
     # функция сохранения данных о пользователе ВКонтакте в базу данных
     # возвращае True, если данные сохранены в базе данных, иначе False
     def new_vkuser(self, vk_user: VKUserData) -> bool:
-        
+        res = True
         if not self.id_in_database(vk_user.vk_id):
             # нет такого пользователя в базе данных
             sql = f"""
                 INSERT INTO vk_users (vk_id,first_name,last_name,bdate,gender,city_id,city_title,vkdomain,last_visit) 
                 VALUES ({vk_user.vk_id},'{vk_user.first_name}','{vk_user.last_name}','{vk_user.bdate}',{vk_user.gender},{vk_user.city_id},'{vk_user.city_title}','{vk_user.vkdomain}','{vk_user.last_visit}');
                 """
+            result = self.connection.execute(sql)
+            # если запрос выполнился с ошибкой
+            if result is None:
+                res = False
         else:
             # пользователь уже существует в базе данных
-            sql = f"""
-                UPDATE vk_users SET last_visit = '{vk_user.last_visit}' WHERE vk_id = {vk_user.vk_id};
-                """
+            result = self.vk_user_update_last_visit(vk_user)
+            # если запрос выполнился с ошибкой
+            if result is None:
+                res = False
+        # успешный результат
+        return res
+    # enf new_vk_user
+    
+    # обновляем время последнего общения с ботом у существующего в базе пользователя
+    def vk_user_update_last_visit(self, vk_user: VKUserData) -> bool:
+        sql = f"""
+            UPDATE vk_users SET last_visit = '{vk_user.last_visit}' WHERE vk_id = {vk_user.vk_id};
+            """
         result = self.connection.execute(sql)
         # если запрос выполнился с ошибкой
         if result is None:
             return False
         # успешный результат
-        return True
-
-    # enf new_vk_user
+        return True        
+    # end vk_user_update_last_visit()
 
     # Вставить массив данных в last_search
     def insert_last_search(self, user_id, lst_ids, position):
