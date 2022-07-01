@@ -1,6 +1,6 @@
 ###########################
 # файл: logic.py
-# version: 0.1.16
+# version: 0.1.17
 ###########################
 from modules.data.data import comands
 from modules.db.databases import DataBase
@@ -30,13 +30,13 @@ class Logic(object):
         elif self.db.id_in_database(user_id): # нет такого пользователя в базе данных
             # Получим пользователя из БД
             self.vkUser = self.db.get_vkuser(user_id)
+            self.db.vk_user_update_last_visit(self.vkUser)
         else:
             # Создадим пользователя
             self.vkUser = VKUserData(self.api.get_info(user_id))
-            
-        # создаем или обновляем (если существует) данные о пользователе
-        if not self.db.new_vkuser(self.vkUser):
-            return False
+            # создаем или обновляем (если существует) данные о пользователе
+            if not self.db.new_vkuser(self.vkUser):
+                return False
         # Проверим свойства в БД и сохраним, если их нет там
         self.get_settings()
         return True
