@@ -16,8 +16,14 @@ from modules.utils import utils
 
 # основаная функция программы
 def main():
+    # загружаем токен для инициализации API
+    token = utils.get_token('VKinder')
+    # если токен не удалось загрузить бот не стартует
+    if token == None:
+        print('Инициализация бота невозможна!')
+        return False
     # Инициализация объектов
-    vk_session = VkApi(token=utils.get_token('VKinder'), api_version=API_VERSION)
+    vk_session = VkApi(token=token, api_version=API_VERSION)
     vk = vk_session.get_api()
     longpoll = VkBotLongPoll(vk_session, group_id=GROUP_ID)
     logic = Logic(DataBase(utils.get_token('db_connection')), ClassVK(utils.get_token('access_token')))
