@@ -25,7 +25,13 @@ def main():
     # Инициализация объектов
     vk_session = VkApi(token=token, api_version=API_VERSION)
     vk = vk_session.get_api()
-    longpoll = VkBotLongPoll(vk_session, group_id=GROUP_ID)
+    try:
+        longpoll = VkBotLongPoll(vk_session, group_id=GROUP_ID)
+    except Exception as err:
+        # обработка ошибки инициализации обработчика событий Бота
+        print('Ошибка инициализации API VK')
+        print(err)
+        return False
     logic = Logic(DataBase(utils.get_token('db_connection')), ClassVK(utils.get_token('access_token')))
     print(f"Бот запущен")
 
